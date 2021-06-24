@@ -10,7 +10,7 @@ TIME_SLEEP = 1
 
 # 엑셀 열 크기
 N = 29
-M = 10
+M = 0
 
 # 매크로 마우스 좌표
 F = 8
@@ -33,7 +33,8 @@ POS = ((1340, 340),
        (800, 600),
        (1190, 590),
        (1660, 595),
-       (1850, 345))
+       (1850, 345),
+       (495, 535))
 
 # 음식 엑셀 & 업체 엑셀
 shops_df = pandas.read_excel("excel/shop_list.xlsx")
@@ -140,7 +141,13 @@ for i in range(0, M):
     while True:
         if keyboard.is_pressed("enter"):
             break
+
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
+
+# 매크로 종료
+pyautogui.click(POS[11][0], POS[11][1])
+pyperclip.copy("끝")
+pyautogui.hotkey("ctrl", "v")
