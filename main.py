@@ -52,14 +52,11 @@ for i in range(0, N):
     shop_list["c"].append(shops_df.iloc[i][2])
 
 # 매크로 시작
-print("-------------------- 매크로 --------------------")
+print()
+print("----------------- 매크로 -----------------")
 for i in range(0, M):
     data = list_df.iloc[i]
     shop, date, amount, cost = map(lambda r: r, data)
-
-    # 로그
-    print(
-        f"---------- {i+1}: {shop} | {date} | {amount} | {cost} ----------")
 
     # 데이터 가공
     shop_keyword = shop_list[shop[0]][int(shop[1:])]
@@ -68,6 +65,9 @@ for i in range(0, M):
     food_keyword = food_list[i % 4]
     expiration_date_keyword = (datetime.datetime(2021, int(date[0:2]), int(
         date[2:4])) + datetime.timedelta(hours=24*30)).strftime("%Y%m%d")
+
+    # 로그
+    print(f"{i+1} : {shop_keyword}, {amount}개, {cost}원")
 
     # 음식 종류 예외 (4: 도넛츠, 5: 냉동떡, 6: 포장반찬, 7: 족발류)
     if shop == "a6":
@@ -86,10 +86,6 @@ for i in range(0, M):
         food_keyword = food_list[6]
     elif shop == "c7":
         food_keyword = food_list[7]
-
-        # 로그
-    print(
-        f"- {shop_keyword} | {date_keyword} | {food_keyword} | {expiration_date_keyword} -")
 
     # 등록
     pyautogui.click(POS[0][0], POS[0][1])
