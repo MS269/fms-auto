@@ -9,7 +9,6 @@ import time
 TIME_SLEEP = 1
 
 # 매크로 마우스 좌표
-F = 8
 FOOD = ((535, 520),
         (535, 550),
         (535, 670),
@@ -115,7 +114,7 @@ for i in range(0, len(list_df)):
     time.sleep(TIME_SLEEP)
 
     # 음식 종류 선택
-    for i in range(0, F):
+    for i in range(0, len(food_list)):
         if food_keyword == food_list[i]:
             pyautogui.click(FOOD[i][0], FOOD[i][1])
 
@@ -142,8 +141,3 @@ for i in range(0, len(list_df)):
     time.sleep(TIME_SLEEP)
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
-
-# 매크로 종료
-pyautogui.click(POS[11][0], POS[11][1])
-pyperclip.copy("끝")
-pyautogui.hotkey("ctrl", "v")
