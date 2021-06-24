@@ -10,7 +10,7 @@ TIME_SLEEP = 1
 
 # 엑셀 열 크기
 N = 29
-M = 1
+M = 10
 
 # 매크로 마우스 좌표
 F = 8
@@ -59,7 +59,7 @@ for i in range(0, M):
 
     # 로그
     print(
-        f"---------- {i+2}: {shop} | {date} | {amount} | {cost} ----------")
+        f"---------- {i+1}: {shop} | {date} | {amount} | {cost} ----------")
 
     # 데이터 가공
     shop_keyword = shop_list[shop[0]][int(shop[1:])]
@@ -145,5 +145,6 @@ for i in range(0, M):
         if keyboard.is_pressed("enter"):
             break
     pyautogui.press("enter")
+    time.sleep(TIME_SLEEP)
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
