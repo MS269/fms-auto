@@ -5,9 +5,6 @@ import pyautogui
 import pyperclip
 import time
 
-# TODO: 시작 단축키, 멈추는 단축키
-# TODO: 빵 선택 마우스 위치 수정
-
 # 버퍼링
 TIME_SLEEP = 1
 
@@ -39,10 +36,10 @@ POS = ((1340, 340),
        (1850, 345))
 
 # 음식 엑셀 & 업체 엑셀
-shops_df = pandas.read_excel("shop_list.xlsx")
-list_df = pandas.read_excel("list.xlsx",
-                            names=["shop", "date", "amount", "cost", "food"],
-                            dtype={"shop": str, "date": str, "amount": str, "cost": str, "food": str})
+shops_df = pandas.read_excel("excel/shop_list.xlsx")
+list_df = pandas.read_excel("excel/list.xlsx",
+                            names=["shop", "date", "amount", "cost"],
+                            dtype={"shop": str, "date": str, "amount": str, "cost": str})
 
 # 음식 리스트
 food_list = ("우유식빵", "슈크림빵", "단팥빵", "소보루빵", "도넛츠", "냉동떡", "포장반찬", "족발류")
@@ -126,8 +123,8 @@ for i in range(0, M):
 
     # 음식 종류 선택
     for i in range(0, F):
-        if food_keyword == food_list[F]:
-            pyautogui.click(FOOD[F][0], FOOD[F][1])
+        if food_keyword == food_list[i]:
+            pyautogui.click(FOOD[i][0], FOOD[i][1])
 
     pyautogui.click(POS[7][0], POS[7][1])
 
@@ -147,5 +144,6 @@ for i in range(0, M):
     while True:
         if keyboard.is_pressed("enter"):
             break
+    pyautogui.press("enter")
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
