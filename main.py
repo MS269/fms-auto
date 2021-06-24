@@ -8,10 +8,6 @@ import time
 # 버퍼링
 TIME_SLEEP = 1
 
-# 엑셀 열 크기
-N = 29
-M = 0
-
 # 매크로 마우스 좌표
 F = 8
 FOOD = ((535, 520),
@@ -47,7 +43,7 @@ food_list = ("우유식빵", "슈크림빵", "단팥빵", "소보루빵", "도�
 
 # 업체 리스트
 shop_list = {"a": [None], "b": [None], "c": [None]}
-for i in range(0, N):
+for i in range(0, len(shops_df)):
     shop_list["a"].append(shops_df.iloc[i][0])
     shop_list["b"].append(shops_df.iloc[i][1])
     shop_list["c"].append(shops_df.iloc[i][2])
@@ -55,7 +51,7 @@ for i in range(0, N):
 # 매크로 시작
 print()
 print("----------------- 매크로 -----------------")
-for i in range(0, M):
+for i in range(0, len(list_df)):
     data = list_df.iloc[i]
     shop, date, amount, cost = map(lambda r: r, data)
 
