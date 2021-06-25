@@ -137,6 +137,7 @@ for i in range(0, len(list_df)):
         if keyboard.is_pressed("enter"):
             break
 
+    # 저장
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
     pyautogui.press("enter")
