@@ -9,27 +9,22 @@ import time
 TIME_SLEEP = 1
 
 # 매크로 마우스 좌표
-FOOD = ((535, 520),
-        (535, 550),
-        (535, 670),
-        (535, 580),
-        (535, 610),
-        (535, 520),
-        (535, 520),
-        (535, 520))
-POS = ((1340, 340),
-       (520, 435),
-       (885, 430),
-       (1225, 315),
-       (925, 905),
-       (1850, 500),
-       (1000, 430),
-       (940, 825),
-       (800, 600),
-       (1190, 590),
-       (1660, 595),
-       (1850, 345),
-       (495, 535))
+FOOD = ((620, 525),
+        (620, 550),
+        (620, 645),
+        (620, 570),
+        (620, 595),
+        (620, 525),
+        (620, 525),
+        (620, 525))
+POS = ((1455, 275),
+        (420, 350),
+        (710, 350),
+        (935, 830),
+        (1870, 400),
+        (990, 450),
+        (945, 765),
+        (1865, 275))
 
 # 음식 엑셀 & 업체 엑셀
 shops_df = pandas.read_excel("excel/shop_list.xlsx")
@@ -97,17 +92,16 @@ for i in range(0, len(list_df)):
     # 기부자 검색
     pyautogui.click(POS[2][0], POS[2][1])
     time.sleep(TIME_SLEEP)
-    pyautogui.click(POS[3][0], POS[3][1])
     pyperclip.copy(shop_keyword)
     pyautogui.hotkey("ctrl", "v")
     pyautogui.press("f2")
     time.sleep(TIME_SLEEP)
-    pyautogui.click(POS[4][0], POS[4][1])
+    pyautogui.click(POS[3][0], POS[3][1])
 
     # 추가
-    pyautogui.click(POS[5][0], POS[5][1])
+    pyautogui.click(POS[4][0], POS[4][1])
     time.sleep(TIME_SLEEP)
-    pyautogui.click(POS[6][0], POS[6][1])
+    pyautogui.click(POS[5][0], POS[5][1])
     pyperclip.copy(food_keyword)
     pyautogui.hotkey("ctrl", "v")
     pyautogui.press("f2")
@@ -118,26 +112,30 @@ for i in range(0, len(list_df)):
         if food_keyword == food_list[i]:
             pyautogui.click(FOOD[i][0], FOOD[i][1])
 
-    pyautogui.click(POS[7][0], POS[7][1])
+    pyautogui.click(POS[6][0], POS[6][1])
 
     # 목록 작성
-    pyautogui.click(POS[8][0], POS[8][1])
     pyperclip.copy(amount)
     pyautogui.hotkey("ctrl", "v")
-    pyautogui.click(POS[9][0], POS[9][1])
+    pyautogui.press("tab")
+    pyautogui.press("tab")
+    pyautogui.press("tab")
+    pyautogui.press("tab")
     pyperclip.copy(expiration_date_keyword)
     pyautogui.hotkey("ctrl", "v")
-    pyautogui.click(POS[10][0], POS[10][1])
+    pyautogui.press("tab")
     pyperclip.copy(cost)
     pyautogui.hotkey("ctrl", "v")
-    pyautogui.click(POS[11][0], POS[11][1])
+
+    # 저장
+    pyautogui.click(POS[7][0], POS[7][1])
 
     # 엔터 대기
     while True:
         if keyboard.is_pressed("enter"):
             break
 
-    # 저장
+    # 저장 확인
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
     pyautogui.press("enter")
