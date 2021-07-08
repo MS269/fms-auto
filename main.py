@@ -56,7 +56,7 @@ for i in lists:
     shop, date, amount, cost = map(lambda r: r, i)
 
     # 기부처
-    shop_keyword = shops[shop[0]][int(shop[1:])]
+    shop_keyword = shops[shop[0]][int(shop[1:]) - 1]
 
     # 기부날짜
     date_keyword = datetime.datetime(
