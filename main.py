@@ -9,7 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 # 버퍼링
-TIME_SLEEP = 1
+TIME_SLEEP = 2
 
 # 액셀 읽기
 shops_df = pandas.read_excel(
@@ -158,13 +158,10 @@ for i in lists:
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[10]/div/div[6]").click()
     time.sleep(TIME_SLEEP)
 
-    # 엔터 대기
-    while True:
-        if keyboard.is_pressed("enter"):
-            break
-
     # 저장 확인
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
+
+exit()

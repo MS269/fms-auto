@@ -34,8 +34,6 @@ https://chromedriver.chromium.org/downloads
 
 2.  main.py 실행
 
-3.  한 개 끝나면 확인하고 Enter 입력
-
 > 유의: chromedriver.exe 다운로드해야함
 
 ---
