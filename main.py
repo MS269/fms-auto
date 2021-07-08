@@ -1,134 +1,161 @@
 import datetime
+import random
 import keyboard
 import pandas
-import pyautogui
-import pyperclip
 import time
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 # 버퍼링
 TIME_SLEEP = 1
 
-# 매크로 마우스 좌표
-FOOD = ((620, 525),
-        (620, 550),
-        (620, 645),
-        (620, 570),
-        (620, 595),
-        (620, 525),
-        (620, 525),
-        (620, 525))
-POS = ((1455, 275),
-        (420, 350),
-        (710, 350),
-        (935, 830),
-        (1870, 400),
-        (990, 450),
-        (945, 765),
-        (1865, 275))
-
-# 음식 엑셀 & 업체 엑셀
-shops_df = pandas.read_excel("excel/shop_list.xlsx")
+# 액셀 읽기
+shops_df = pandas.read_excel(
+    "excel/shops.xlsx", names=["a", "b", "c"], dtype={"a": str, "b": str, "c": str})
 list_df = pandas.read_excel("excel/list.xlsx",
                             names=["shop", "date", "amount", "cost"],
                             dtype={"shop": str, "date": str, "amount": str, "cost": str})
 
-# 음식 리스트
-food_list = ("우유식빵", "슈크림빵", "단팥빵", "소보루빵", "도넛츠", "냉동떡", "포장반찬", "족발류")
+# 액셀 데이터 처리
+shops = shops_df.to_dict()
+lists = list_df.values.tolist()
 
-# 업체 리스트
-shop_list = {"a": [None], "b": [None], "c": [None]}
-for i in range(0, len(shops_df)):
-    shop_list["a"].append(shops_df.iloc[i][0])
-    shop_list["b"].append(shops_df.iloc[i][1])
-    shop_list["c"].append(shops_df.iloc[i][2])
+# 음식
+foods = (("우유식빵", 0), ("슈크림빵", 1), ("단팥빵", 5), ("소보루빵", 2),
+         ("도넛츠", 6), ("냉동떡", 0), ("포장반찬", 0), ("족발류", 0))
 
-# 매크로 시작
-print()
-print("----------------- 매크로 -----------------")
-for i in range(0, len(list_df)):
-    data = list_df.iloc[i]
-    shop, date, amount, cost = map(lambda r: r, data)
+# NFMS 실행
+driver = webdriver.Chrome()
+url = "https://nfms.foodbank1377.org/"
+driver.get(url)
+driver.maximize_window()
 
-    # 데이터 가공
-    shop_keyword = shop_list[shop[0]][int(shop[1:])]
+# 로그인 대기 (ESC 입력시 실행)
+while True:
+    if keyboard.is_pressed("esc"):
+        break
+
+# 기부물품관리 클릭
+driver.find_element_by_xpath(
+    "/html/body/div[1]/div/div/div[1]/div/div/div/div[10]").click()
+
+# 접수등록 클릭
+driver.find_element_by_xpath(
+    "/html/body/div[1]/div/div/div[2]/div/div[1]/div/div/div/div[4]/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[3]/div/div/div/div[1]/div/div/div[4]").click()
+time.sleep(TIME_SLEEP)
+
+# 카운터
+count = 0
+
+# 등록 시작
+for i in lists:
+    count += 1
+
+    # 데이터 읽기
+    shop, date, amount, cost = map(lambda r: r, i)
+
+    # 기부처
+    shop_keyword = shops[shop[0]][int(shop[1:])]
+
+    # 기부날짜
     date_keyword = datetime.datetime(
         2021, int(date[0:2]), int(date[2:4])).strftime("%Y%m%d")
-    food_keyword = food_list[i % 4]
-    expiration_date_keyword = (datetime.datetime(2021, int(date[0:2]), int(
+
+    # 유통기한
+    exp_date_keyword = (datetime.datetime(2021, int(date[0:2]), int(
         date[2:4])) + datetime.timedelta(hours=24*30)).strftime("%Y%m%d")
 
-    # 로그
-    print(f"{i+1} : {shop_keyword}, {amount}개, {cost}원")
+    # 음식 종류 랜덤 (0: 우유식빵, 1: 슈크림빵, 2: 단팥빵, 3: 소보루빵)
+    food_idx = random.randrange(0, 4)
 
-    # 음식 종류 예외 (4: 도넛츠, 5: 냉동떡, 6: 포장반찬, 7: 족발류)
+    # 음식 종류 예외 처리 (4: 도넛츠, 5: 냉동떡, 6: 포장반찬, 7: 족발류)
     if shop == "a6":
-        food_keyword = food_list[4]
+        food_idx = 4
     elif shop == "a4":
-        food_keyword = food_list[5]
+        food_idx = 5
     elif shop == "a8":
-        food_keyword = food_list[5]
+        food_idx = 5
     elif shop == "b16":
-        food_keyword = food_list[5]
+        food_idx = 5
     elif shop == "b18":
-        food_keyword = food_list[5]
+        food_idx = 5
     elif shop == "c12":
-        food_keyword = food_list[5]
+        food_idx = 5
     elif shop == "a10":
-        food_keyword = food_list[6]
+        food_idx = 6
     elif shop == "c7":
-        food_keyword = food_list[7]
+        food_idx = 7
 
-    # 등록
-    pyautogui.click(POS[0][0], POS[0][1])
+    # 음식
+    food_keyword = foods[food_idx][0]
+    food_check = 2 + foods[food_idx][1]
+
+    # 로그
+    print(f"{count}: {shop_keyword}, {amount}개, {cost}원")
+
+    # 등록 클릭
+    driver.find_element_by_xpath(
+        "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[32]/div/div[12]").click()
     time.sleep(TIME_SLEEP)
 
-    # 기부일자
-    pyautogui.click(POS[1][0], POS[1][1])
-    pyautogui.hotkey("ctrl", "a")
-    pyautogui.press("backspace")
-    pyperclip.copy(date_keyword)
-    pyautogui.hotkey("ctrl", "v")
+    # 기부일자 입력
+    driver.find_element_by_xpath(
+        "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[8]").click()
+    ActionChains(driver).send_keys(
+        Keys.CONTROL, "a").send_keys(date_keyword).perform()
 
-    # 기부자 검색
-    pyautogui.click(POS[2][0], POS[2][1])
-    time.sleep(TIME_SLEEP)
-    pyperclip.copy(shop_keyword)
-    pyautogui.hotkey("ctrl", "v")
-    pyautogui.press("f2")
-    time.sleep(TIME_SLEEP)
-    pyautogui.click(POS[3][0], POS[3][1])
-
-    # 추가
-    pyautogui.click(POS[4][0], POS[4][1])
-    time.sleep(TIME_SLEEP)
-    pyautogui.click(POS[5][0], POS[5][1])
-    pyperclip.copy(food_keyword)
-    pyautogui.hotkey("ctrl", "v")
-    pyautogui.press("f2")
+    # 기부자 클릭
+    driver.find_element_by_xpath(
+        "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[15]").click()
     time.sleep(TIME_SLEEP)
 
-    # 음식 종류 선택
-    for i in range(0, len(food_list)):
-        if food_keyword == food_list[i]:
-            pyautogui.click(FOOD[i][0], FOOD[i][1])
+    # 기부자 입력 및 조회
+    driver.find_element_by_xpath(
+        "/html/body/div[2]/div/div[1]/div/div/div[1]/div[18]").click()
+    ActionChains(driver).send_keys(shop_keyword).send_keys(Keys.F2).perform()
+    time.sleep(TIME_SLEEP)
 
-    pyautogui.click(POS[6][0], POS[6][1])
+    # 기부자 확인
+    driver.find_element_by_xpath(
+        "/html/body/div[2]/div/div[1]/div/div/div[1]/div[24]").click()
+    time.sleep(TIME_SLEEP)
 
-    # 목록 작성
-    pyperclip.copy(amount)
-    pyautogui.hotkey("ctrl", "v")
-    pyautogui.press("tab")
-    pyautogui.press("tab")
-    pyautogui.press("tab")
-    pyautogui.press("tab")
-    pyperclip.copy(expiration_date_keyword)
-    pyautogui.hotkey("ctrl", "v")
-    pyautogui.press("tab")
-    pyperclip.copy(cost)
-    pyautogui.hotkey("ctrl", "v")
+    # 목록 추가
+    driver.find_element_by_xpath(
+        "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[28]/div/div[1]/div/div").click()
+    time.sleep(TIME_SLEEP)
 
-    # 저장
-    pyautogui.click(POS[7][0], POS[7][1])
+    # 기부물품 입력 및 조회
+    driver.find_element_by_xpath(
+        "/html/body/div[2]/div/div[1]/div/div/div/div[17]").click()
+    ActionChains(driver).send_keys(food_keyword).send_keys(Keys.F2).perform()
+    time.sleep(TIME_SLEEP)
+
+    # 기부물품 선택
+    driver.find_element_by_xpath(
+        f"/html/body/div[2]/div/div[1]/div/div/div/div[9]/div[1]/div[2]/div[1]/div/div[{food_check}]/div[2]/div/div[2]/div/div").click()
+
+    # 기부물품 확인
+    driver.find_element_by_xpath(
+        "/html/body/div[2]/div/div[1]/div/div/div/div[14]/div/div[2]").click()
+    time.sleep(TIME_SLEEP)
+
+    # 수량 입력
+    ActionChains(driver).send_keys(amount).send_keys(Keys.TAB).send_keys(
+        Keys.TAB).send_keys(Keys.TAB).send_keys(Keys.TAB).perform()
+
+    # 유통기한 입력
+    ActionChains(driver).send_keys(
+        exp_date_keyword).send_keys(Keys.TAB).perform()
+
+    # 금액 입력
+    ActionChains(driver).send_keys(cost).perform()
+
+    # 저장 클릭
+    driver.find_element_by_xpath(
+        "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[10]/div/div[6]").click()
+    time.sleep(TIME_SLEEP)
 
     # 엔터 대기
     while True:
@@ -136,7 +163,7 @@ for i in range(0, len(list_df)):
             break
 
     # 저장 확인
-    pyautogui.press("enter")
+    ActionChains(driver).send_keys(Keys.ENTER).perform()
     time.sleep(TIME_SLEEP)
-    pyautogui.press("enter")
+    ActionChains(driver).send_keys(Keys.ENTER).perform()
     time.sleep(TIME_SLEEP)
