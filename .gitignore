@@ -1,1 +1,3 @@
 chromedriver.exe
+*.xlsx
+!excel/shops.xlsx
