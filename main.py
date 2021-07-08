@@ -93,7 +93,7 @@ for i in lists:
     food_check = 2 + foods[food_idx][1]
 
     # 로그
-    print(f"{count}: {shop_keyword}, {amount}개, {cost}원")
+    print(f"{count}: {shop_keyword}, {date_keyword}, {amount}개, {cost}원")
 
     # 등록 클릭
     driver.find_element_by_xpath(
@@ -103,8 +103,8 @@ for i in lists:
     # 기부일자 입력
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[8]").click()
-    ActionChains(driver).send_keys(
-        Keys.CONTROL, "a").send_keys(date_keyword).perform()
+    pyautogui.hotkey("ctrl", "a")
+    ActionChains(driver).send_keys(date_keyword).perform()
 
     # 기부자 클릭
     driver.find_element_by_xpath(
