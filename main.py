@@ -2,6 +2,7 @@ import datetime
 import random
 import keyboard
 import pandas
+import pyautogui
 import time
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -163,7 +164,7 @@ for i in lists:
             break
 
     # 저장 확인
-    ActionChains(driver).send_keys(Keys.ENTER).perform()
+    pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
-    ActionChains(driver).send_keys(Keys.ENTER).perform()
+    pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
