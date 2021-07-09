@@ -93,7 +93,7 @@ for i in lists:
     food_check = 2 + foods[food_idx][1]
 
     # 로그
-    print(f"{count}: {shop_keyword}, {date_keyword}, {amount}개, {cost}원")
+    print(f"{count}: {shop_keyword}, {date_keyword}, {food_keyword} {amount}개, {cost}원")
 
     # 등록 클릭
     driver.find_element_by_xpath(
