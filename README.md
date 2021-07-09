@@ -2,7 +2,7 @@
 
 기부물품관리시스템 접수등록 자동화
 
-1. <a href="https://github.com/MS269/fms-auto#chromedriver.eve-다운">chromedriver.eve 다운</a>
+1. <a href="https://github.com/MS269/fms-auto#chromedriver.eve-다운로드">chromedriver.eve 다운로드</a>
 
 2. <a href="https://github.com/MS269/fms-auto#사용법">사용법</a>
 
@@ -10,10 +10,12 @@
 
 ---
 
-## chromedriver.eve 다운
+## chromedriver.eve 다운로드
 
-크롬 버전에 따라 다운 >
+크롬 버전에 따라 다운로드 >
 https://chromedriver.chromium.org/downloads
+
+> 유의: main.py 와 같은 폴더에 있어야함!
 
 ---
 
@@ -28,19 +30,19 @@ https://chromedriver.chromium.org/downloads
     |b10|0111|100|100000|
     |c1|1101|100|100000
 
-    > 유의: 업체 꼭 소문자로!
+    > 유의: 업체(shop)꼭 소문자로!
 
-    > 유의: 날짜 꼭 4자리수로!
+    > 유의: 날짜(date) 꼭 4자리수로!
 
 2.  main.py 실행
 
-> 유의: chromedriver.exe 다운로드해야함
+> 유의: chromedriver.exe 가 main.py 와 같은 폴더에 있어야함!
 
 ---
 
 ## 기부업체 수정법
 
-- excel/shop_list.xlsx 에 추가
+- excel/shops.xlsx 에 추가
 
   EX)
   |a|b|c|
@@ -58,14 +60,6 @@ https://chromedriver.chromium.org/downloads
    if shop == "a6":
        food_idx = 4
    elif shop == "a4":
-       food_idx = 5
-   elif shop == "a8":
-       food_idx = 5
-   elif shop == "b16":
-       food_idx = 5
-   elif shop == "b18":
-       food_idx = 5
-   elif shop == "c12":
        food_idx = 5
    elif shop == "a10":
        food_idx = 6
