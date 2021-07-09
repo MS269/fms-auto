@@ -164,4 +164,5 @@ for i in lists:
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
 
+# 종료
 exit()
