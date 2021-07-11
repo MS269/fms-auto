@@ -30,9 +30,9 @@ https://chromedriver.chromium.org/downloads
     |b10|0111|100|100000|
     |c1|1101|100|100000
 
-    > 유의: 업체(shop)꼭 소문자로!
+    > 유의: shop(업체) 꼭 소문자로!
 
-    > 유의: 날짜(date) 꼭 4자리수로!
+    > 유의: date(날짜) 꼭 4자리수로!
 
 2.  main.py 실행
 
