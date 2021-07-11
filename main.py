@@ -26,7 +26,7 @@ lists = list_df.values.tolist()
 foods = (("우유식빵", 0), ("슈크림빵", 1), ("단팥빵", 5), ("소보루빵", 2),
          ("도넛츠", 6), ("냉동떡", 0), ("포장반찬", 0), ("족발류", 0))
 
-# NFMS 실행
+# 크롬 드라이버 실행
 driver = webdriver.Chrome()
 url = "https://nfms.foodbank1377.org/"
 driver.get(url)
@@ -67,9 +67,6 @@ for i in lists:
     exp_date_keyword = (datetime.datetime(2021, int(date[0:2]), int(
         date[2:4])) + datetime.timedelta(hours=24*30)).strftime("%Y%m%d")
 
-    # 음식 종류 랜덤 (0: 우유식빵, 1: 슈크림빵, 2: 단팥빵, 3: 소보루빵)
-    food_idx = random.randrange(0, 4)
-
     # 음식 종류 예외 처리 (4: 도넛츠, 5: 냉동떡, 6: 포장반찬, 7: 족발류)
     if shop == "a6":
         food_idx = 4
@@ -87,6 +84,9 @@ for i in lists:
         food_idx = 6
     elif shop == "c7":
         food_idx = 7
+    # 음식 종류 랜덤 (0: 우유식빵, 1: 슈크림빵, 2: 단팥빵, 3: 소보루빵)
+    else:
+        food_idx = random.randrange(0, 4)
 
     # 음식
     food_keyword = foods[food_idx][0]
