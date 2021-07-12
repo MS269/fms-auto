@@ -38,6 +38,8 @@ https://chromedriver.chromium.org/downloads
 
 > 유의: chromedriver.exe 가 main.py 와 같은 폴더에 있어야함!
 
+3. 공동인증서 로그인 하고 ESC 입력
+
 ---
 
 ## 기부업체 수정법
