@@ -1,3 +1,4 @@
 chromedriver.exe
 *.xlsx
 !excel/shops.xlsx
+!excel/exceptions.xlsx

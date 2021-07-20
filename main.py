@@ -12,15 +12,18 @@ from selenium.webdriver.common.keys import Keys
 TIME_SLEEP = 1
 
 # 액셀 읽기
+receipts_df = pandas.read_excel("excel/receipts.xlsx",
+                                names=["shop", "date", "amount", "cost"],
+                                dtype={"shop": str, "date": str, "amount": int, "cost": int})
 shops_df = pandas.read_excel(
-    "excel/shops.xlsx", names=["a", "b", "c"], dtype={"a": str, "b": str, "c": str})
-list_df = pandas.read_excel("excel/list.xlsx",
-                            names=["shop", "date", "amount", "cost"],
-                            dtype={"shop": str, "date": str, "amount": str, "cost": str})
+    "excel/shops.xlsx", names=["id", "a", "b", "c"], dtype={"id": int, "a": str, "b": str, "c": str})
+exceptions_df = pandas.read_excel(
+    "excel/exceptions.xlsx", names=["shop", "food"], dtype={"shop": str, "food": int})
 
 # 액셀 데이터 처리
+receipts = receipts_df.values.tolist()
 shops = shops_df.to_dict()
-lists = list_df.values.tolist()
+exceptions = exceptions_df.values.tolist()
 
 # 음식
 foods = (("우유식빵", 0), ("슈크림빵", 1), ("단팥빵", 5), ("소보루빵", 2),
@@ -50,14 +53,14 @@ time.sleep(TIME_SLEEP)
 count = 0
 
 # 등록 시작
-for i in lists:
+for receipt in receipts:
     count += 1
 
     # 데이터 읽기
-    shop, date, amount, cost = map(lambda r: r, i)
+    shop, date, amount, cost = map(lambda ret: ret, receipt)
 
     # 기부처
-    shop_keyword = shops[shop[0]][int(shop[1:]) - 1]
+    shop_keyword = shops[shop[0]][int(shop[1:])]
 
     # 기부날짜
     date_keyword = datetime.datetime(
@@ -67,26 +70,14 @@ for i in lists:
     exp_date_keyword = (datetime.datetime(2021, int(date[0:2]), int(
         date[2:4])) + datetime.timedelta(hours=24*30)).strftime("%Y%m%d")
 
-    # 음식 종류 예외 처리 (4: 도넛츠, 5: 냉동떡, 6: 포장반찬, 7: 족발류)
-    if shop == "a6":
-        food_idx = 4
-    elif shop == "a4":
-        food_idx = 5
-    elif shop == "a8":
-        food_idx = 5
-    elif shop == "b16":
-        food_idx = 5
-    elif shop == "b18":
-        food_idx = 5
-    elif shop == "c12":
-        food_idx = 5
-    elif shop == "a10":
-        food_idx = 6
-    elif shop == "c7":
-        food_idx = 7
     # 음식 종류 랜덤 (0: 우유식빵, 1: 슈크림빵, 2: 단팥빵, 3: 소보루빵)
-    else:
-        food_idx = random.randrange(0, 4)
+    food_idx = random.randrange(0, 4)
+
+    # 음식 종류 예외 처리 (4: 도넛츠, 5: 냉동떡, 6: 포장반찬, 7: 족발류)
+    for exception in exceptions:
+        if shop == exception[0]:
+            food_idx = exception[1]
+            break
 
     # 음식
     food_keyword = foods[food_idx][0]
