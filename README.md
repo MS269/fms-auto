@@ -24,15 +24,15 @@ https://chromedriver.chromium.org/downloads
 1.  excel/list.xlsx 에 리스트 작성
 
     EX)
-    |shop|date|amount|cost|
+    |업체|날짜|수량|가격|
     |:--:|:--:|:----:|:--:|
     |a1|0101|10|10000|
     |b10|0111|100|100000|
     |c1|1101|100|100000
 
-    > 유의: shop(업체) 꼭 소문자로!
+    > 유의: 업체 꼭 소문자로!
 
-    > 유의: date(날짜) 꼭 4자리수로!
+    > 유의: 날짜 꼭 4자리수로!
 
 2.  main.py 실행
 
