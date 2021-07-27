@@ -106,12 +106,12 @@ for receipt in receipts:
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div[1]/div[18]").click()
     ActionChains(driver).send_keys(shop_keyword).send_keys(Keys.F2).perform()
-    time.sleep(TIME_SLEEP)
+    time.sleep(TIME_SLEEP * 0.5)
 
     # 기부자 확인
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div[1]/div[24]").click()
-    time.sleep(TIME_SLEEP)
+    time.sleep(TIME_SLEEP * 0.1)
 
     # 목록 추가
     driver.find_element_by_xpath(
@@ -122,7 +122,7 @@ for receipt in receipts:
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div/div[17]").click()
     ActionChains(driver).send_keys(food_keyword).send_keys(Keys.F2).perform()
-    time.sleep(TIME_SLEEP)
+    time.sleep(TIME_SLEEP * 1.5)
 
     # 기부물품 선택
     driver.find_element_by_xpath(
@@ -131,7 +131,7 @@ for receipt in receipts:
     # 기부물품 확인
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div/div[14]/div/div[2]").click()
-    time.sleep(TIME_SLEEP)
+    time.sleep(TIME_SLEEP * 0.1)
 
     # 수량 입력
     ActionChains(driver).send_keys(amount).send_keys(Keys.TAB).send_keys(
@@ -147,11 +147,11 @@ for receipt in receipts:
     # 저장 클릭
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[10]/div/div[6]").click()
-    time.sleep(TIME_SLEEP * 2)
+    time.sleep(TIME_SLEEP)
 
     # 저장 확인
     pyautogui.press("enter")
-    time.sleep(TIME_SLEEP)
+    time.sleep(TIME_SLEEP * 0.1)
     pyautogui.press("enter")
     time.sleep(TIME_SLEEP)
 
