@@ -3,13 +3,9 @@ import random
 import keyboard
 import pandas
 import pyautogui
-import time
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-
-# 버퍼링
-TIME_SLEEP = 1
 
 # 액셀 읽기
 receipts_df = pandas.read_excel("excel/receipts.xlsx",
@@ -33,6 +29,7 @@ foods = (("우유식빵", 0), ("슈크림빵", 1), ("단팥빵", 5), ("소보루
 driver = webdriver.Chrome()
 url = "https://nfms.foodbank1377.org/"
 driver.get(url)
+driver.implicitly_wait(5)
 driver.maximize_window()
 
 # 로그인 대기 (ESC 입력시 실행)
@@ -47,7 +44,6 @@ driver.find_element_by_xpath(
 # 접수등록 클릭
 driver.find_element_by_xpath(
     "/html/body/div[1]/div/div/div[2]/div/div[1]/div/div/div/div[4]/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[3]/div/div/div/div[1]/div/div/div[4]").click()
-time.sleep(TIME_SLEEP)
 
 # 카운터
 count = 0
@@ -89,7 +85,6 @@ for receipt in receipts:
     # 등록 클릭
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[32]/div/div[12]").click()
-    time.sleep(TIME_SLEEP)
 
     # 기부일자 입력
     driver.find_element_by_xpath(
@@ -100,29 +95,24 @@ for receipt in receipts:
     # 기부자 클릭
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[15]").click()
-    time.sleep(TIME_SLEEP)
 
     # 기부자 입력 및 조회
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div[1]/div[18]").click()
     ActionChains(driver).send_keys(shop_keyword).send_keys(Keys.F2).perform()
-    time.sleep(TIME_SLEEP * 0.5)
 
     # 기부자 확인
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div[1]/div[24]").click()
-    time.sleep(TIME_SLEEP * 0.1)
 
     # 목록 추가
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[28]/div/div[1]/div/div").click()
-    time.sleep(TIME_SLEEP)
 
     # 기부물품 입력 및 조회
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div/div[17]").click()
     ActionChains(driver).send_keys(food_keyword).send_keys(Keys.F2).perform()
-    time.sleep(TIME_SLEEP * 1.5)
 
     # 기부물품 선택
     driver.find_element_by_xpath(
@@ -131,7 +121,6 @@ for receipt in receipts:
     # 기부물품 확인
     driver.find_element_by_xpath(
         "/html/body/div[2]/div/div[1]/div/div/div/div[14]/div/div[2]").click()
-    time.sleep(TIME_SLEEP * 0.1)
 
     # 수량 입력
     ActionChains(driver).send_keys(amount).send_keys(Keys.TAB).send_keys(
@@ -147,13 +136,11 @@ for receipt in receipts:
     # 저장 클릭
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[10]/div/div[6]").click()
-    time.sleep(TIME_SLEEP)
 
     # 저장 확인
     pyautogui.press("enter")
-    time.sleep(TIME_SLEEP * 0.1)
     pyautogui.press("enter")
-    time.sleep(TIME_SLEEP)
 
 # 종료
+driver.minimize_window()
 exit()
