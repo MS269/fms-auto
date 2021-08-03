@@ -142,5 +142,4 @@ for receipt in receipts:
     pyautogui.press("enter")
 
 # 종료
-driver.minimize_window()
-exit()
+driver.close()
