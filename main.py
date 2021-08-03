@@ -66,7 +66,7 @@ for receipt in receipts:
 
     # 유통기한
     exp_date_keyword = (datetime.datetime(2021, int(date[0:2]), int(
-        date[2:4])) + datetime.timedelta(hours=24*30)).strftime("%Y%m%d")
+        date[2:4])) + datetime.timedelta(days=30)).strftime("%Y%m%d")
 
     # 음식 종류 랜덤 (0: 우유식빵, 1: 슈크림빵, 2: 단팥빵, 3: 소보루빵)
     food_idx = random.randrange(0, 4)
