@@ -2,10 +2,12 @@ import datetime
 import random
 import keyboard
 import pandas
-import pyautogui
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 # 액셀 읽기
 receipts_df = pandas.read_excel("excel/receipts.xlsx",
@@ -89,8 +91,8 @@ for receipt in receipts:
     # 기부일자 입력
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[8]").click()
-    pyautogui.hotkey("ctrl", "a")
-    ActionChains(driver).send_keys(date_keyword).perform()
+    ActionChains(driver).key_down(Keys.CONTROL).send_keys(
+        "a").key_up(Keys.CONTROL).send_keys(date_keyword).perform()
 
     # 기부자 클릭
     driver.find_element_by_xpath(
@@ -138,8 +140,9 @@ for receipt in receipts:
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[10]/div/div[6]").click()
 
     # 저장 확인
-    pyautogui.press("enter")
-    pyautogui.press("enter")
+    Alert(driver).accept()
+    WebDriverWait(driver, 5).until(EC.alert_is_present())
+    Alert(driver).accept()
 
 # 종료
-driver.close()
+driver.minimize_window()
