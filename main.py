@@ -143,6 +143,3 @@ for receipt in receipts:
     Alert(driver).accept()
     WebDriverWait(driver, 5).until(EC.alert_is_present())
     Alert(driver).accept()
-
-# 종료
-driver.minimize_window()
