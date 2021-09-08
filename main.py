@@ -82,7 +82,7 @@ for receipt in receipts:
     food_check = 2 + foods[food_idx][1]
 
     # 로그
-    print(f"{count}: {shop_keyword}, {date_keyword}, {food_keyword} {amount}개, {cost}원")
+    print(f"{count}: {shop_keyword}, {date_keyword}, {exp_date_keyword}, {food_keyword} {amount}개, {cost}원")
 
     # 등록 클릭
     driver.find_element_by_xpath(
@@ -129,8 +129,8 @@ for receipt in receipts:
         Keys.TAB).send_keys(Keys.TAB).send_keys(Keys.TAB).perform()
 
     # 유통기한 입력
-    ActionChains(driver).send_keys(
-        exp_date_keyword).send_keys(Keys.TAB).perform()
+    ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").key_up(
+        Keys.CONTROL).send_keys(exp_date_keyword).send_keys(Keys.TAB).perform()
 
     # 금액 입력
     ActionChains(driver).send_keys(cost).perform()
