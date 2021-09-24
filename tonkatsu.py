@@ -1,5 +1,4 @@
 import datetime
-import random
 import keyboard
 import pandas
 from selenium import webdriver
