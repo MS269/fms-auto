@@ -80,9 +80,8 @@ for receipt in receipts:
 
     # 기부자 입력 및 조회
     driver.find_element_by_xpath(
-        "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[8]").click()
-    ActionChains(driver).key_down(Keys.CONTROL).send_keys(
-        "a").key_up(Keys.CONTROL).send_keys(date_keyword).perform()
+        "/html/body/div[2]/div/div[1]/div/div/div[1]/div[18]").click()
+    ActionChains(driver).send_keys(shop_keyword).send_keys(Keys.F2).perform()
 
     # 기부자 확인
     driver.find_element_by_xpath(
