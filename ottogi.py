@@ -59,7 +59,7 @@ for receipt in receipts:
 
     # 음식
     food_keyword = "기타 식재료"
-    food_check = 2
+    food_check = 2 + 1
 
     # 로그
     print(f"{count}: {shop_keyword}, {date_keyword}, {food_keyword} {amount}개, {cost}원")
