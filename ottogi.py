@@ -112,6 +112,9 @@ for receipt in receipts:
     ActionChains(driver).send_keys(
         exp_date_keyword).send_keys(Keys.TAB).perform()
 
+    # 금액 입력
+    ActionChains(driver).send_keys(cost).perform()
+
     # 저장 클릭
     driver.find_element_by_xpath(
         "/html/body/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div/div/div/div/div[1]/div[1]/div[3]/div[53]/div[3]/div[10]/div/div[6]").click()
