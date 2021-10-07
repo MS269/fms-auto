@@ -41,7 +41,7 @@ while True:
 
 # 기부물품관리 클릭
 driver.find_element_by_xpath(
-    "/html/body/div[1]/div/div/div[1]/div/div/div/div[10]").click()
+    "/html/body/div[1]/div/div/div[1]/div/div/div/div[11]").click()
 
 # 접수등록 클릭
 driver.find_element_by_xpath(
