@@ -30,7 +30,7 @@ while True:
 
 # 기부물품관리 클릭
 driver.find_element_by_xpath(
-    "/html/body/div[1]/div/div/div[1]/div/div/div/div[10]").click()
+    "/html/body/div[1]/div/div/div[1]/div/div/div/div[11]").click()
 
 # 접수등록 클릭
 driver.find_element_by_xpath(
@@ -59,7 +59,7 @@ for receipt in receipts:
 
     # 음식
     food_keyword = "기타 식재료"
-    food_check = 2
+    food_check = 2 + 1
 
     # 로그
     print(f"{count}: {shop_keyword}, {date_keyword}, {food_keyword} {amount}개, {cost}원")
@@ -111,6 +111,9 @@ for receipt in receipts:
     # 유통기한 입력
     ActionChains(driver).send_keys(
         exp_date_keyword).send_keys(Keys.TAB).perform()
+
+    # 금액 입력
+    ActionChains(driver).send_keys(cost).perform()
 
     # 저장 클릭
     driver.find_element_by_xpath(
